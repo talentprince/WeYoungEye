@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<string name="leave_this_page">"离开此页"</string>
+<string name="stay_on_this_page">"留在此页"</string>
+<string name="reload_this_page">"重新加载此页"</string>
+<string name="dont_reload_this_page">"Don\'t reload"</string>
+<string name="js_modal_dialog_confirm">"确定"</string>
+<string name="js_modal_dialog_cancel">"取消"</string>
+<string name="suppress_js_modal_dialogs">"Prevent this page from creating additional dialogs"</string>
+<string name="accessibility_js_modal_dialog_prompt">"Prompt"</string>
+<string name="certtitle">"Certificate Viewer"</string>
+<string name="sync_error_generic">"Sync error"</string>
+<string name="sync_error_ga">"Please update your sign in details."</string>
+<string name="sync_error_connection">"Could not connect to the sync server."</string>
+<string name="sync_error_domain">"Sync is not available for your domain."</string>
+<string name="sync_error_service_unavailable">"The service is not available; try again later."</string>
+<string name="policy_dialog_title">"Confirm sign in"</string>
+<string name="policy_dialog_message">"This account is managed by %1$s.
+
+You are signing in with a managed account and giving its administrator control over your Chrome profile. Your Chrome data will become permanently tied to this account. Disconnecting from this account will delete the local Chrome data."</string>
+<string name="policy_dialog_proceed">"Accept and sign in"</string>
+<string name="policy_dialog_cancel">"取消"</string>
+<string name="wiping_profile_data_title">"Clearing account data"</string>
+<string name="wiping_profile_data_message">"请稍候..."</string>
+</resources>
