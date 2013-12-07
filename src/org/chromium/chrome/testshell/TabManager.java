@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.testshell;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,6 +32,35 @@ public class TabManager extends LinearLayout {
 
     private String mStartupUrl = DEFAULT_URL;
 
+    private static TabManager sTabManager = null;
+
+    public static TabManager create(Activity context) {
+        if(sTabManager == null) {
+            sTabManager = new TabManager(context);
+        }
+        return sTabManager;
+    }
+
+    public static TabManager getInstance() {
+        return sTabManager;
+    }
+
+    private TabManager(Activity context) {
+        super(context);
+
+        mContentViewHolder = (ViewGroup) context.findViewById(R.id.content_container);
+        mToolbar = (TestShellToolbar) context.findViewById(R.id.toolbar);
+        mContentViewRenderView = new ContentViewRenderView(getContext()) {
+            @Override
+            protected void onReadyToRender() {
+                if (mCurrentTab == null) createTab(mStartupUrl);
+            }
+        };
+        mContentViewHolder.addView(mContentViewRenderView,
+                new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT));
+    }
     /**
      * @param context The Context the view is running in.
      * @param attrs   The attributes of the XML tag that is inflating the view.
@@ -86,6 +116,27 @@ public class TabManager extends LinearLayout {
         if (!isContentViewRenderViewInitialized()) return;
 
         TestShellTab tab = new TestShellTab(getContext(), url, mWindow);
+        setCurrentTab(tab);
+    }
+    int window;
+    public void openNewWindow(int nativeWebContents) {
+        window = nativeWebContents;
+        mContentViewHolder.removeView(mContentViewRenderView);
+        mContentViewRenderView = null;
+        mContentViewRenderView = new ContentViewRenderView(getContext()) {
+            @Override
+            protected void onReadyToRender() {
+                 createTab(window);
+            }
+        };
+        mContentViewHolder.addView(mContentViewRenderView,
+                new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT));
+    }
+
+    public void createTab(int nativeWebContents) {
+        TestShellTab tab = new TestShellTab(getContext(), nativeWebContents, mWindow);
         setCurrentTab(tab);
     }
 

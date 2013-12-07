@@ -7,15 +7,18 @@ package org.chromium.chrome.browser;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.view.View;
 
 import org.chromium.base.CalledByNative;
 import org.chromium.base.ObserverList;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.ui.toolbar.ToolbarModelSecurityLevel;
+import org.chromium.chrome.testshell.TabManager;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewClient;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.LoadUrlParams;
 import org.chromium.content.browser.NavigationClient;
 import org.chromium.content.browser.NavigationHistory;
 import org.chromium.content.browser.PageInfo;
@@ -96,6 +99,14 @@ public abstract class TabBase implements NavigationClient {
         @Override
         public void onUpdateUrl(String url) {
             for (TabObserver observer : mObservers) observer.onUpdateUrl(TabBase.this, url);
+        }
+        
+        @Override
+        public boolean addNewContents(int nativeSourceWebContents,
+                int nativeWebContents, int disposition, Rect initialPosition,
+                boolean userGesture) {
+            TabManager.getInstance().openNewWindow(nativeWebContents);
+            return true;
         }
     }
 

@@ -37,6 +37,12 @@ public class TestShellTab extends TabBase {
         loadUrlWithSanitization(url);
     }
 
+    public TestShellTab(Context context, int nativeWebContents, WindowAndroid window) {
+        super(false, context, window);
+        initialize();
+        initContentView(nativeWebContents);
+    }
+ 
     @Override
     public void initialize() {
         super.initialize();

@@ -6,7 +6,7 @@
      found in the LICENSE file.
  -->
 
-<org.chromium.chrome.testshell.TabManager android:id="@+id/tab_manager"
+<LinearLayout android:id="@+id/tab_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,4 +51,4 @@
         android:layout_weight="1">
     </FrameLayout>
 
-</org.chromium.chrome.testshell.TabManager>
+</LinearLayout>

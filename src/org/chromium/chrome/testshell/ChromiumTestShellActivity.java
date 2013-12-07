@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.chromium.base.ChromiumActivity;
@@ -82,7 +83,8 @@ public class ChromiumTestShellActivity extends ChromiumActivity implements MenuH
 
     private void finishInitialization(final Bundle savedInstanceState) {
         setContentView(R.layout.testshell_activity);
-        mTabManager = (TabManager) findViewById(R.id.tab_manager);
+        mTabManager = TabManager.create(this);
+        ((ViewGroup) findViewById(R.id.tab_container)).addView(mTabManager);
         String startupUrl = getUrlFromIntent(getIntent());
         if (!TextUtils.isEmpty(startupUrl)) {
             mTabManager.setStartupUrl(startupUrl);
@@ -219,16 +221,16 @@ public class ChromiumTestShellActivity extends ChromiumActivity implements MenuH
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.signin:
-                if (ChromeSigninController.get(this).isSignedIn())
-                    SyncController.openSignOutDialog(getFragmentManager());
-                else
-                    SyncController.openSigninDialog(getFragmentManager());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if(R.id.signin == id) {
+            if (ChromeSigninController.get(this).isSignedIn())
+                SyncController.openSignOutDialog(getFragmentManager());
+            else
+                SyncController.openSigninDialog(getFragmentManager());
+            return true;
         }
+        else
+            return super.onOptionsItemSelected(item);
     }
 
     @Override
